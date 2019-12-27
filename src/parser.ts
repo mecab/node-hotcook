@@ -1,0 +1,126 @@
+import { URL } from 'url';
+import cheerio from 'cheerio';
+
+export interface RecipeInfo {
+    id: string;
+    name: string;
+    url: string;
+    imageUrl: string;
+}
+
+export interface Recipe {
+    title: string;
+    materialTitle: string;
+    recipeNumber: string;
+    time: string;
+    calorie: string | null;
+    materials: MaterialGroup[];
+    note: string;
+    process: string[];
+    imageUrl: string;
+}
+
+export interface MaterialGroup {
+    materials: Material[];
+    title?: string;
+}
+
+export interface Material {
+    name: string;
+    amount: string;
+}
+
+const BASE_URL = 'https://cook-healsio.jp/hotcook/HW24C/recipes';
+
+export class Parser {
+    private _baseUrl: string;
+
+    constructor(baseUrl = BASE_URL) {
+        this._baseUrl = baseUrl;
+    }
+
+    parseSearchResult(html: string): RecipeInfo[] {
+        const $ = cheerio.load(html);
+
+        const data = $('.recipe_item')
+            .toArray()
+            .map((e) => {
+                const $item = $(e);
+                const url = $item.find('a').first().attr('href') || '';
+                const imageUrl = $item.find('.recipe_itemImg > img.pc').attr('src') || '';
+                return {
+                    url: new URL(url, this._baseUrl).toString(),
+                    imageUrl: new URL(imageUrl, this._baseUrl).toString(),
+                    name: $item.find('.recipe_recipeName').text() || '',
+                    id: url.split('/').slice(-1)[0] || '0',
+                };
+            });
+
+        return data;
+    }
+
+    parseRecipe(html: string): Recipe {
+        const $ = cheerio.load(html);
+
+        const title = $('.mv_ttl').text();
+        const $material = $('.material');
+        const materialTitle = $material.find('.subTtl').text();
+        const recipeNumber = $('.iconBox_item-2row').first().text().replace(/(\r|\n|\r\n|\s)/gm, '');
+        const time = $('.mv_timeKcalItem .mv_iconText').first().text().trim();
+        const calorie = $('.mv_timeKcalItem .mv_iconText').length === 2 ? $('.mv_timeKcalItem .mv_iconText').last().text().replace('カロリー：', '').trim() : null;
+
+        const imageUrl = new URL($('.mv_img img').attr('src') ?? '', this._baseUrl).toString();
+
+        const $recipeBoxes = $material.find('.inner > div');
+
+        const materials = $recipeBoxes.toArray()
+            .map((e): MaterialGroup => {
+                const $box = $(e);
+                const groupTitle = $box.find('h4').text().trim();
+
+                const materials = $box.find('tr')
+                    .toArray()
+                    .map((row): Material => {
+                        const $row= $(row);
+                        return {
+                            name: $row.find('td').first().text().trim(),
+                            amount: $row.find('td').last().text().trim(),
+                        }
+                    });
+
+                return {
+                    title: !!groupTitle ? groupTitle : undefined,
+                    materials: materials
+                }
+            });
+
+        const note = $material.find('.recipe_note')
+            .text()
+            .trim()
+            .split('\n')
+            .map(e => e.trim())
+            .join(' ');
+        const $recipeBox = $('.recipeBox');
+        const process = $recipeBox.find('.recipe_textItem')
+            .toArray()
+            .map((e): string => {
+                const $process = $(e);
+                return $process.find('.recipe_text')
+                    .toArray()
+                    .map(line => $(line).text())
+                    .join('\n');
+            });
+
+        return {
+            title,
+            materialTitle,
+            materials,
+            time,
+            calorie,
+            note,
+            process,
+            recipeNumber,
+            imageUrl
+        }
+    }
+}
