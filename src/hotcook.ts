@@ -39,16 +39,16 @@ export class Hotcook {
         this._model = model;
     }
 
-    public search(query: string, options?: SearchOptions): Pager<RecipeInfo>
+    public search(query?: string, options?: SearchOptions): Pager<RecipeInfo>
     public search(options: SearchOptions): Pager<RecipeInfo>
-    public search(queryOrOptions: string | SearchOptions, options?: SearchOptions): Pager<RecipeInfo> {
+    public search(queryOrOptions: string | SearchOptions | undefined, options?: SearchOptions): Pager<RecipeInfo> {
         let options_;
         if (typeof queryOrOptions === 'string') {
             options_ = options ? { ...options } : {};
             options_.query = queryOrOptions;
         }
         else {
-            options_ = { ... queryOrOptions };
+            options_ = { ... queryOrOptions ?? {} };
         }
         if (!options_.query) {
             options_.query = '';
