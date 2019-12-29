@@ -73,7 +73,7 @@ export class Parser {
 
         const $recipeBoxes = $material.find('.inner > div');
 
-        const materials = $recipeBoxes.toArray()
+        let materials = $recipeBoxes.toArray()
             .map((e): MaterialGroup => {
                 const $box = $(e);
                 const groupTitle = $box.find('h4').text().trim();
@@ -93,6 +93,21 @@ export class Parser {
                     materials: materials
                 }
             });
+
+        // 同じグループタイトル（タイトルなし、A、Bとか）の連続したMaterialGroupがあったらまとめる。
+        // （特にタイトルなしの場合、1具ににつき1テーブルになってる（ナンデ！？！？）のでまとめるべき）。
+        materials = materials.reduce((current: MaterialGroup[], next: MaterialGroup): MaterialGroup[] => {
+            const lastGroup = current[current.length - 1];
+
+            // !lastGroup <= これは一番最初のreducer呼び出し
+            if (!lastGroup || lastGroup.title != next.title) {
+                current.push(next);
+            }
+            else {
+                lastGroup.materials.push(...next.materials);
+            }
+            return current;
+        }, []);
 
         const note = $material.find('.recipe_note')
             .text()

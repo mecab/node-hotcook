@@ -126,3 +126,43 @@ describe('parseRecipe test (no calorie input)', () => {
         assert(result.calorie === null);
     })
 });
+
+describe('parseRecipe test (many normalBox)', () => {
+    let testInput: string;
+    let result: Recipe;
+
+    before(function() {
+        testInput = fs.readFileSync(path.join(__dirname, 'data/recipe_manyNormalBox.html'), 'utf-8');
+    });
+
+    it('can parser the test input', async function() {
+        const parser = new Parser('https://cook-healsio.jp/hotcook/HW24C/recipes');
+        result = parser.parseRecipe(testInput);
+    });
+
+    it('reduce MaterialGroup and have only one group', async function() {
+        assert(result.materials.length === 2);
+    })
+
+    it('has correct title and number of materials in the material group', async function() {
+        const firstGroup = result.materials[0];
+        assert(firstGroup.title === undefined);
+        assert(firstGroup.materials.length === 7);
+
+        // check ther first and the last
+        assert(firstGroup.materials[0].name === '大根（2～3㎝輪切り）');
+        assert(firstGroup.materials[0].amount === '400g');
+        assert(firstGroup.materials[6].name === '牛すじ（下ゆでしたものを竹串にさす）');
+        assert(firstGroup.materials[6].amount === '200ｇ');
+
+        const secondGroup = result.materials[1];
+        assert(secondGroup.title === 'A');
+        assert(secondGroup.materials.length === 4);
+
+        // check ther first and the last
+        assert(secondGroup.materials[0].name === '赤みそ');
+        assert(secondGroup.materials[0].amount === '150ｇ');
+        assert(secondGroup.materials[3].name === 'だし汁');
+        assert(secondGroup.materials[3].amount === '目安量1L');
+    });
+});
