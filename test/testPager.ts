@@ -1,7 +1,7 @@
 import assert = require('assert');
 
 import * as sinon from 'sinon';
-import { PagenatedOptions } from '../src/hotcook';
+import { PagenatedOptions } from '../src/pager';
 import { PagerFactory } from '../src/pager';
 import { after } from 'mocha';
 

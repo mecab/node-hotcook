@@ -1,5 +1,8 @@
-import { PagenatedOptions } from './hotcook';
 import { sleep } from './util';
+
+export interface PagenatedOptions {
+    page?: number;
+}
 
 interface PagerInternal<T> extends AsyncIterableIterator<T> {
     _currentPage: number;

@@ -4,6 +4,7 @@ import rp from 'request-promise-native';
 import { PagerFactory, Pager } from './pager';
 import { Parser, Recipe } from './parser';
 import { RecipeInfo } from './parser';
+import { PagenatedOptions } from './pager';
 
 export type Model = 'HW24E' | 'HW16E' | 'HT16E' | 'HW10E' | 'HW16D' | 'SH16W' | 'HW24C' | 'HT24B' | 'HT99B' | 'HT99A';
 export type RecipeKindOptions = '煮物' | 'カレー・シチュー' | 'スープ・汁物' | 'ゆで物' | '蒸し物' | 'めん類' | '発酵・低温調理' | 'お菓子・パン';
@@ -21,10 +22,6 @@ export interface SearchOptions {
     time?: CookingTimeOptions[];
     reservationCapable?: boolean;
     materials?: MaterialOptions[];
-}
-
-export interface PagenatedOptions {
-    page?: number;
 }
 
 export interface SearchPageOptions extends SearchOptions, PagenatedOptions {}
