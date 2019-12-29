@@ -90,7 +90,6 @@ export class Hotcook {
 
     public async recipe(recipeNumber: string): Promise<{ url: string; recipe: Recipe }> {
         const url = `${this.modelUrl}/${recipeNumber}`;
-        console.log(url);
         const res = await rp(url);
         const parser = new Parser(this.modelUrl);
         return {
