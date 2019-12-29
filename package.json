@@ -20,6 +20,10 @@
     "email": "mecab@misosi.ru",
     "url": "http://misosi.ru/"
   },
+  "repository": {
+    "type" : "git",
+    "url" : "http://github.com/mecab/node-hotcook.git"
+  },
   "license": "MIT",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
