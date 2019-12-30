@@ -29,6 +29,8 @@ describe('PagerFactory test', function() {
     };
 
     describe('Create the iterator to iterate items on all pages', function() {
+        this.timeout(5000);
+
         it('returns an iterator represents flatten items', async function() {
             const arr = [];
 
