@@ -13,7 +13,7 @@
     "debug": "ts-node-dev src/app.ts",
     "build": "tsc",
     "clean": "rm -rf ./dist",
-    "prepublish": "npm run clean && npm run build"
+    "prepublish": "npm run dl-test-data && npm test && npm run clean && npm run build"
   },
   "author": {
     "name": "mecab",
