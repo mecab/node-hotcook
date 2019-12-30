@@ -24,7 +24,7 @@ export interface SearchOptions {
     materials?: MaterialOptions[];
 }
 
-export interface SearchPageOptions extends SearchOptions, PagenatedOptions {}
+interface SearchPageOptions extends SearchOptions, PagenatedOptions {}
 
 const BASE_URL = 'https://cook-healsio.jp/hotcook';
 
