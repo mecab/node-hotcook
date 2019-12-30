@@ -21,6 +21,9 @@ $ npm install @mecab/hotcook
 #### 1.1 簡単な例
 
 ```typescript
+import { Hotcook } from '@mecab/hotcook';
+// const { Hotcook } = require('@mecab/hotcook');
+
 (async () => {
     const hotcook = new Hotcook('HW24C'); // 省略した場合、デフォルトはHW24Cです。
     const result = hotcook.search('じゃがいも');
@@ -56,6 +59,8 @@ $ npm install @mecab/hotcook
 
 #### 1.2. 完全なオプション
 ```typescript
+import { Hotcook } from '@mecab/hotcook';
+
 (async () => {
     const hotcook = new Hotcook();
     const result = hotcook.search('じゃがいも', {
@@ -87,6 +92,8 @@ hotcook.search({
 
 #### 1.3. 最大ページ数を指定
 ```typescript
+import { Hotcook } from '@mecab/hotcook';
+
 (async () => {
     const hotcook = new Hotcook();
     const result = hotcook.search('じゃがいも').maxPage(1);
@@ -111,6 +118,8 @@ hotcook.search({
 
 #### 1.4. 特定のページのみを取得
 ```typescript
+import { Hotcook } from '@mecab/hotcook';
+
 (async () => {
     const hotcook = new Hotcook();
     const result = hotcook.search('じゃがいも');
@@ -137,6 +146,8 @@ hotcook.search({
 
 ### 2. レシピの詳細を取得する
 ```typescript
+import { Hotcook } from '@mecab/hotcook';
+
 (async () => {
     const hotcook = new Hotcook();
     const recipe = await hotcook.recipe('R4006'); // 検索結果の`recipe.id`
