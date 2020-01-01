@@ -142,7 +142,7 @@ describe('parseRecipe test (many normalBox)', () => {
 
     it('reduce MaterialGroup and have only one group', async function() {
         assert(result.materials.length === 2);
-    })
+    });
 
     it('has correct title and number of materials in the material group', async function() {
         const firstGroup = result.materials[0];
@@ -166,3 +166,21 @@ describe('parseRecipe test (many normalBox)', () => {
         assert(secondGroup.materials[3].amount === '目安量1L');
     });
 });
+
+describe('parseRecipe test (no recipe number)', function() {
+    let testInput: string;
+    let result: Recipe;
+
+    before(function() {
+        testInput = fs.readFileSync(path.join(__dirname, 'data/recipe_noRecipeNumber.html'), 'utf-8');
+    });
+
+    it('can parser the test input', async function() {
+        const parser = new Parser('https://cook-healsio.jp/hotcook/HW24C/recipes');
+        result = parser.parseRecipe(testInput);
+    });
+
+    it('has "手動" as recipeNumber', async function() {
+        assert(result.recipeNumber === '手動');
+    })
+})

@@ -65,7 +65,7 @@ export class Parser {
         const title = $('.mv_ttl').text();
         const $material = $('.material');
         const materialTitle = $material.find('.subTtl').text();
-        const recipeNumber = $('.iconBox_item-2row').first().text().replace(/(\r|\n|\r\n|\s)/gm, '');
+        const recipeNumber = $('.iconBox .iconBox_item-2row').first().text().replace(/(\r|\n|\r\n|\s)/gm, '');
         const time = $('.mv_timeKcalItem .mv_iconText').first().text().trim();
         const calorie = $('.mv_timeKcalItem .mv_iconText').length === 2 ? $('.mv_timeKcalItem .mv_iconText').last().text().replace('カロリー：', '').trim() : null;
 
@@ -134,7 +134,7 @@ export class Parser {
             calorie,
             note,
             process,
-            recipeNumber,
+            recipeNumber: recipeNumber || '手動',
             imageUrl
         }
     }
