@@ -1,15 +1,18 @@
 import assert = require('assert');
 
 import * as sinon from 'sinon';
-import { PagenatedOptions } from '../src/pager';
-import { PagerFactory } from '../src/pager';
 import { after } from 'mocha';
+
+import { testMode } from './util';
+
+import { PagerFactory as _PagerFactory, PagenatedOptions } from '../src/pager';
+const PagerFactory: typeof _PagerFactory = require(`../${testMode()}/pager`).PagerFactory;
 
 function range(start: number, num: number) {
     return Array.from(Array(num).keys()).map(e => e + start);
 }
 
-describe('PagerFactory test', function() {
+describe('PagerFactory test', async function() {
     const fake = sinon.fake();
     const testFunc = (options: PagenatedOptions): Promise<Number[]> =>  {
         fake();
@@ -45,7 +48,7 @@ describe('PagerFactory test', function() {
             assert(fake.callCount === 4);
         });
 
-        after(() => {
+        after(async function() {
             fake.resetHistory();
         })
     });
@@ -65,7 +68,7 @@ describe('PagerFactory test', function() {
             assert(fake.callCount === 2);
         });
 
-        after(() => {
+        after(async function() {
             fake.resetHistory();
         });
     });
@@ -81,7 +84,7 @@ describe('PagerFactory test', function() {
             assert(fake.callCount === 1);
         });
 
-        after(() => {
+        after(async function() {
             fake.resetHistory();
         })
     })

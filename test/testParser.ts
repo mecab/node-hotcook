@@ -2,9 +2,13 @@ import assert = require('assert');
 
 import path from 'path'
 import fs from 'fs';
-import { Parser, RecipeInfo, Recipe } from '../src/parser';
 
-describe('parseSearchResult test', () => {
+import { testMode } from './util';
+
+import { Parser as _Parser, RecipeInfo, Recipe } from '../src/parser';
+const Parser = require(`../${testMode()}/parser`).Parser;
+
+describe('parseSearchResult test', async function() {
     let testInput: string;
     let result: RecipeInfo[];
 
@@ -30,7 +34,7 @@ describe('parseSearchResult test', () => {
     });
 });
 
-describe('parseRecipe test', () => {
+describe('parseRecipe test', async function () {
     let testInput: string;
     let result: Recipe;
 
@@ -109,7 +113,7 @@ describe('parseRecipe test', () => {
     });
 });
 
-describe('parseRecipe test (no calorie input)', () => {
+describe('parseRecipe test (no calorie input)', async function() {
     let testInput: string;
     let result: Recipe;
 
@@ -127,7 +131,7 @@ describe('parseRecipe test (no calorie input)', () => {
     })
 });
 
-describe('parseRecipe test (many normalBox)', () => {
+describe('parseRecipe test (many normalBox)', async function() {
     let testInput: string;
     let result: Recipe;
 
@@ -183,4 +187,4 @@ describe('parseRecipe test (no recipe number)', function() {
     it('has "手動" as recipeNumber', async function() {
         assert(result.recipeNumber === '手動');
     })
-})
+});

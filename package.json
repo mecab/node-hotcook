@@ -10,11 +10,12 @@
     "test:dl-data": "./test/downloadTestHtml.sh",
     "test:lint": "eslint --ext .js,.ts ./src",
     "test:test": "./node_modules/.bin/mocha --require espower-typescript/guess test/**/*.ts",
+    "test:disttest": "HOTCOOK_TEST_TESTMODE=dist npm run test:test",
     "test": "npm run test:test",
     "pretest": "npm run test:lint && npm run test:dl-data",
     "build": "tsc",
     "clean": "rm -rf ./dist",
-    "prepublish": "npm run dl-data && npm test && npm run clean && npm run build"
+    "prepublish": "HOTCOOK_TEST_FORCE_DOWNLOAD=true npm test && npm run clean && npm run build && npm run test:disttest"
   },
   "author": {
     "name": "mecab",
