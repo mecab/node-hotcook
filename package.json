@@ -16,7 +16,7 @@
     "pretest": "npm run test:lint && npm run test:dl-data",
     "build": "tsc",
     "clean": "rm -rf ./dist",
-    "prepublish": "HOTCOOK_TEST_FORCE_DOWNLOAD=true npm test && npm run clean && npm run build && npm run test:disttest"
+    "prepublishOnly": "HOTCOOK_TEST_FORCE_DOWNLOAD=true npm test && npm run clean && npm run build && npm run test:disttest"
   },
   "author": {
     "name": "mecab",
