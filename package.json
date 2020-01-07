@@ -11,6 +11,7 @@
     "test:lint": "eslint --ext .js,.ts ./src",
     "test:test": "mocha --require espower-typescript/guess test/**/*.ts",
     "test:cover": "nyc npm run test:test",
+    "test:report": "mkdir -p ./.coverage && nyc report --reporter=text-lcov > .coverage/lcov.info",
     "test:disttest": "HOTCOOK_TEST_TESTMODE=dist npm run test:test",
     "test": "npm run test:cover",
     "pretest": "npm run test:lint && npm run test:dl-data",
