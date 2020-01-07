@@ -118,7 +118,7 @@ describe('parseRecipe test (no calorie input)', async function() {
     let result: Recipe;
 
     before(function() {
-        testInput = fs.readFileSync(path.join(__dirname, 'data/recipe_nocalorie.html'), 'utf-8');
+        testInput = fs.readFileSync(path.join(__dirname, 'data/recipe_noCalorie.html'), 'utf-8');
     });
 
     it('can parser the test input', async function() {
