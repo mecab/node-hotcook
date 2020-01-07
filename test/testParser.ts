@@ -6,7 +6,7 @@ import fs from 'fs';
 import { testMode } from './util';
 
 import { Parser as _Parser, RecipeInfo, Recipe } from '../src/parser';
-const Parser = require(`../${testMode()}/parser`).Parser;
+const Parser: typeof _Parser = require(`../${testMode()}/parser`).Parser;
 
 describe('parseSearchResult test', async function() {
     let testInput: string;
