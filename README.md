@@ -1,6 +1,8 @@
 ホットクック レシピ検索 パッケージ
 =============================
 
+[![npm version](https://badge.fury.io/js/%40mecab%2Fhotcook.svg)](https://badge.fury.io/js/%40mecab%2Fhotcook) [![Node CI](https://github.com/mecab/node-hotcook/workflows/Node%20CI/badge.svg)](https://github.com/mecab/node-hotcook/actions?query=workflow%3A%22Node+CI%22) [![Coverage Status](https://coveralls.io/repos/github/mecab/node-hotcook/badge.svg?branch=master)](https://coveralls.io/github/mecab/node-hotcook?branch=master)
+
 [ホットクック](https://cook-healsio.jp/hotcook/)の公式レシピ検索サイトを楽にスクレイピングするAPIを提供します。
 
 インストール
