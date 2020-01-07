@@ -3,7 +3,7 @@
 set -e
 
 dl_needed() {
-    if [ "$HOTCOOK_TEST_FORCE_DOWNLOAD" == "true" ]; then
+    if [ "$HOTCOOK_TEST_FORCE_DOWNLOAD" = "true" ]; then
         return 1;
     fi
 
