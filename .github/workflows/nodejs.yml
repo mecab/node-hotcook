@@ -26,6 +26,8 @@ jobs:
         npm install
         npm test
         npm run test:report
+        npm run build
+        npm run test:disttest
       env:
         CI: true
 
