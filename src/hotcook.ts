@@ -1,7 +1,7 @@
 import { URL } from 'url';
 import rp from 'request-promise-native';
 
-import { PagerFactory, Pager } from './pager';
+import { Pager } from './pager';
 import { Parser, Recipe } from './parser';
 import { RecipeInfo } from './parser';
 import { PagenatedOptions } from './pager';
@@ -24,7 +24,7 @@ export interface SearchOptions {
     materials?: MaterialOptions[];
 }
 
-interface SearchPageOptions extends SearchOptions, PagenatedOptions {}
+type SearchPageOptions = SearchOptions & PagenatedOptions;
 
 const BASE_URL = 'https://cook-healsio.jp/hotcook';
 
@@ -39,9 +39,9 @@ export class Hotcook {
         this._model = model;
     }
 
-    public search(query?: string, options?: SearchOptions): Pager<RecipeInfo>
-    public search(options: SearchOptions): Pager<RecipeInfo>
-    public search(queryOrOptions: string | SearchOptions | undefined, options?: SearchOptions): Pager<RecipeInfo> {
+    public search(query?: string, options?: SearchOptions): Pager<RecipeInfo, SearchPageOptions>
+    public search(options: SearchOptions): Pager<RecipeInfo, SearchPageOptions>
+    public search(queryOrOptions: string | SearchOptions | undefined, options?: SearchOptions): Pager<RecipeInfo, SearchPageOptions> {
         let options_;
         if (typeof queryOrOptions === 'string') {
             options_ = options ? { ...options } : {};
@@ -54,7 +54,7 @@ export class Hotcook {
             options_.query = '';
         }
 
-        return PagerFactory.create(this._searchPage.bind(this), { ...options_, page: 1 })
+        return new Pager(this._searchPage.bind(this), { ...options_, page: 1 } as SearchPageOptions);
     }
 
     private async _searchPage(options: SearchPageOptions): Promise<RecipeInfo[]> {

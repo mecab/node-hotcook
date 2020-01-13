@@ -5,8 +5,8 @@ import { after } from 'mocha';
 
 import { testMode } from './util';
 
-import { PagerFactory as _PagerFactory, PagenatedOptions } from '../src/pager';
-const PagerFactory: typeof _PagerFactory = require(`../${testMode()}/pager`).PagerFactory;
+import { Pager as _Pager, PagenatedOptions } from '../src/pager';
+const Pager: typeof _Pager = require(`../${testMode()}/pager`).Pager;
 
 function range(start: number, num: number) {
     return Array.from(Array(num).keys()).map(e => e + start);
@@ -37,7 +37,7 @@ describe('PagerFactory test', async function() {
         it('returns an iterator represents flatten items', async function() {
             const arr = [];
 
-            for await (const i of PagerFactory.create(testFunc, {})) {
+            for await (const i of new Pager(testFunc, {})) {
                 arr.push(i);
             }
 
@@ -57,7 +57,7 @@ describe('PagerFactory test', async function() {
         it('returns an iterator represents flatten items but up to page 2', async function() {
             const arr = [];
 
-            for await (const i of PagerFactory.create(testFunc, {}).maxPage(2)) {
+            for await (const i of new Pager(testFunc, {}).maxPage(2)) {
                 arr.push(i);
             }
 
@@ -75,7 +75,7 @@ describe('PagerFactory test', async function() {
 
     describe('getPage test', function() {
         it('returns the promise of items array', async function() {
-            const arr = await PagerFactory.create(testFunc, {}).getPage(2);
+            const arr = await new Pager(testFunc, {}).getPage(2);
 
             assert.deepEqual(arr, [1, 2]);
         });
