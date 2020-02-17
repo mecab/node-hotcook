@@ -1,3 +1,6 @@
+.DS_Store
+.nyc_output/
+.coverage/
 /test/
 /src/
 /.eslintrc.js
