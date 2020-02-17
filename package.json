@@ -1,6 +1,6 @@
 {
   "name": "@mecab/hotcook",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Hotcook recipe scraping API",
   "publishConfig": {
     "access": "public"
