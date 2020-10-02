@@ -39,6 +39,10 @@ export class Parser {
         this._baseUrl = baseUrl;
     }
 
+    private _extractUrlFromCssValue(css: string): string  {
+        return css.match(/url\((.+)\)/)?.[1] ?? '';
+    }
+
     parseSearchResult(html: string): RecipeInfo[] {
         const $ = cheerio.load(html);
 
@@ -47,10 +51,10 @@ export class Parser {
             .map((e) => {
                 const $item = $(e);
                 const url = $item.find('a').first().attr('href') || '';
-                const imageUrl = $item.find('.recipe_itemImg > img.pc').attr('src') || '';
+                const imageUrl = $item.find('.recipe_itemImg > img.pc').attr('style') || '';
                 return {
                     url: new URL(url, this._baseUrl).toString(),
-                    imageUrl: new URL(imageUrl, this._baseUrl).toString(),
+                    imageUrl: new URL(this._extractUrlFromCssValue(imageUrl), this._baseUrl).toString(),
                     name: $item.find('.recipe_recipeName').text() || '',
                     id: url.split('/').slice(-1)[0] || '0',
                 };

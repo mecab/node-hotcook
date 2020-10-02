@@ -27,10 +27,10 @@ describe('parseSearchResult test', async function() {
 
     it ('has correct property on its first item', async function() {
         const first = result[0];
-        assert(first.id === 'R4086');
-        assert(first.name === 'いも・かぼちゃ(ゆで)');
-        assert(first.url === 'https://cook-healsio.jp/hotcook/HW24C/recipes/R4086');
-        assert(first.imageUrl === 'https://cook-healsio.jp/hotcook/asset/images/search/img_recipe_pc.png');
+        assert(first.id === 'R4928');
+        assert(first.name === 'イベリコ豚のタンシチ...');
+        assert(first.url === 'https://cook-healsio.jp/hotcook/HW24C/recipes/R4928');
+        assert(first.imageUrl === 'https://cook-healsio.jp/hotcook/images/800x600/R4928.jpg');
     });
 });
 
